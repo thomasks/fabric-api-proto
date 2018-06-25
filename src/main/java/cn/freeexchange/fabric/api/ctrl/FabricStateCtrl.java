@@ -22,7 +22,6 @@ public class FabricStateCtrl {
 	 @RequestMapping(value = "/invoke", method = RequestMethod.GET)
 	 public CCResult invoke(InvokeReq invokeReq) {
 		 CCResult ccr = new CCResult();
-		 
 		 return ccr;
 	 }
 	 

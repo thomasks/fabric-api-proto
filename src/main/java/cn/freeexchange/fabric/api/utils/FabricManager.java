@@ -69,8 +69,8 @@ public class FabricManager {
         config.setOrderers(getOrderers());
         config.setPeers(getPeers());
         config.setChaincode(
-        		getChaincode("mychannel", "mycc",
-        				"github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02", "1.0"));
+        		getChaincode("mychannel", "simple",
+        				"github.com/lijiaocn/fabric-chaincode-example/demo", "1.0"));
         config.setChannelArtifactsPath(getChannleArtifactsPath());
         config.setCryptoConfigPath(getCryptoConfigPath());
         return config;
@@ -78,8 +78,8 @@ public class FabricManager {
 
     private Orderers getOrderers() {
         Orderers orderer = new Orderers();
-        orderer.setOrdererDomainName("example.com");
-        orderer.addOrderer("orderer.example.com", "grpc://118.25.52.158:7050");
+        orderer.setOrdererDomainName("freeexchange.cn");
+        orderer.addOrderer("orderer.freeexchange.cn", "grpc://orderer.freeexchange.cn:7050");
         return orderer;
     }
 
@@ -92,10 +92,10 @@ public class FabricManager {
         Peers peers = new Peers();
         peers.setOrgName("Org1");
         peers.setOrgMSPID("Org1MSP");
-        peers.setOrgDomainName("org1.example.com");
-        peers.addPeer("peer0.org1.example.com", "peer0.org1.example.com",
-        		"grpc://118.25.52.158:7051", "grpc://118.25.52.158:7053", 
-        		"http://118.25.52.158:7054");
+        peers.setOrgDomainName("org1.freeexchange.cn");
+        peers.addPeer("peer0.org1.freeexchange.cn", "peer0.org1.freeexchange.cn",
+        		"grpcs://peer0.org1.freeexchange.cn:7051", "grpcs://peer0.org1.freeexchange.cn:7053", 
+        		"http://fabricca.freeexchange.cn:7054");
         return peers;
     }
 
