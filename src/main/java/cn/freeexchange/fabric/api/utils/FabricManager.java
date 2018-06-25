@@ -79,7 +79,7 @@ public class FabricManager {
     private Orderers getOrderers() {
         Orderers orderer = new Orderers();
         orderer.setOrdererDomainName("freeexchange.cn");
-        orderer.addOrderer("orderer.freeexchange.cn", "grpc://orderer.freeexchange.cn:7050");
+        orderer.addOrderer("orderer.freeexchange.cn", "grpcs://orderer.freeexchange.cn:7050","orderer");
         return orderer;
     }
 
@@ -95,7 +95,7 @@ public class FabricManager {
         peers.setOrgDomainName("org1.freeexchange.cn");
         peers.addPeer("peer0.org1.freeexchange.cn", "peer0.org1.freeexchange.cn",
         		"grpcs://peer0.org1.freeexchange.cn:7051", "grpcs://peer0.org1.freeexchange.cn:7053", 
-        		"http://fabricca.freeexchange.cn:7054");
+        		"http://fabricca.freeexchange.cn:7054","peer0");
         return peers;
     }
 

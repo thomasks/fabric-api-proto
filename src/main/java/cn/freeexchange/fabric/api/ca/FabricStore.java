@@ -101,7 +101,6 @@ public class FabricStore {
         if (null != fabricUser) {
             return fabricUser;
         }
-        // 创建User，并尝试从键值存储中恢复它的状�??(如果找到的话)�?
         fabricUser = new FabricUser(name, org, this);
         return fabricUser;
     }

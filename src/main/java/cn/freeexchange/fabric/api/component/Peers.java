@@ -23,8 +23,8 @@ public class Peers {
 	
 	/** 新增节点  */
 	public void addPeer(String peerName, String peerEventHubName,
-			String peerLocation, String peerEventHubLocation, String caLocation) {
-		peers.add(new Peer(peerName, peerEventHubName, peerLocation, peerEventHubLocation, caLocation));
+			String peerLocation, String peerEventHubLocation, String caLocation,String peerLocalDir) {
+		peers.add(new Peer(peerName, peerEventHubName, peerLocation, peerEventHubLocation, caLocation,peerLocalDir));
 	}
 	
 	//获取节点集合

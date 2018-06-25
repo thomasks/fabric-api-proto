@@ -28,7 +28,6 @@ import cn.freeexchange.fabric.api.component.Peers;
  * @author aberic
  *
  * @date 2017年9月7日 - 下午4:35:40
- * @email abericyang@gmail.com
  */
 public class FabricOrg {
 
@@ -76,16 +75,16 @@ public class FabricOrg {
         for (int i = 0; i < orderers.get().size(); i++) {
             addOrdererLocation(orderers.get().get(i).getOrdererName(), orderers.get().get(i).getOrdererLocation());
         }
-        setDomainName(peers.getOrgDomainName()); // domainName=tk.anti-moth.com
+        setDomainName(peers.getOrgDomainName()); //
 
         // Set up HFCA for Org1
         // setCAClient(HFCAClient.createNewInstance(peers.getCaLocation(), getCAProperties()));
-
         setAdmin(fabricStore.getMember("admin", peers.getOrgName())); // 设置该组织的管理员
 
-        File skFile = Paths.get(cryptoConfigPath, "/peerOrganizations/", peers.getOrgDomainName(), String.format("/users/Admin@%s/msp/keystore", peers.getOrgDomainName())).toFile();
-        File certificateFile = Paths.get(cryptoConfigPath, "/peerOrganizations/", peers.getOrgDomainName(),
-                String.format("/users/Admin@%s/msp/signcerts/Admin@%s-cert.pem", peers.getOrgDomainName(), peers.getOrgDomainName())).toFile();
+
+        File skFile = Paths.get(cryptoConfigPath, peers.getOrgDomainName(), "/admin/msp/keystore").toFile();
+        File certificateFile = Paths.get(cryptoConfigPath,peers.getOrgDomainName(),
+                "/admin/msp/signcerts/cert.pem").toFile();
         log.debug("skFile = " + skFile.getAbsolutePath());
         log.debug("certificateFile = " + certificateFile.getAbsolutePath());
         setPeerAdmin(fabricStore.getMember(peers.getOrgName() + "Admin", peers.getOrgName(), peers.getOrgMSPID(), findFileSk(skFile), certificateFile)); // 一个特殊的用户，可以创建通道，连接对等点，并安装链码

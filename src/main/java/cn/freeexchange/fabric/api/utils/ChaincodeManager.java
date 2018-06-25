@@ -45,7 +45,7 @@ import cn.freeexchange.fabric.api.component.Orderers;
 import cn.freeexchange.fabric.api.component.Peers;
 
 public class ChaincodeManager {
-
+	
     private static Logger log = Logger.getLogger(ChaincodeManager.class);
 
     private FabricConfig config;
@@ -74,7 +74,8 @@ public class ChaincodeManager {
         fabricOrg = getFabricOrg();
         channel = getChannel();
         chaincodeID = getChaincodeID();
-
+        
+        //TODO peerAdmin
         client.setUserContext(fabricOrg.getPeerAdmin()); // 也许是1.0.0测试版的bug，只有节点管理员可以调用链码
     }
 
@@ -105,7 +106,7 @@ public class ChaincodeManager {
 //        channel.setDeployWaitTime(chaincode.getDeployWatiTime());
 
         for (int i = 0; i < peers.get().size(); i++) {
-            File peerCert = Paths.get(config.getCryptoConfigPath(), "/peerOrganizations", peers.getOrgDomainName(), "peers", peers.get().get(i).getPeerName(), "tls/server.crt")
+            File peerCert = Paths.get(config.getCryptoConfigPath(), peers.getOrgDomainName(),peers.get().get(i).getPeerLocalDir(), "tls/ca.crt")
                     .toFile();
             if (!peerCert.exists()) {
                 throw new RuntimeException(
@@ -114,8 +115,9 @@ public class ChaincodeManager {
             Properties peerProperties = new Properties();
             peerProperties.setProperty("pemFile", peerCert.getAbsolutePath());
             // ret.setProperty("trustServerCertificate", "true"); //testing
-            // environment only NOT FOR PRODUCTION!
-            peerProperties.setProperty("hostnameOverride", peers.getOrgDomainName());
+            //TODO
+            peerProperties.setProperty("trustServerCertificate", "true");
+            //peerProperties.setProperty("hostnameOverride", peers.getOrgDomainName());
             peerProperties.setProperty("sslProvider", "openSSL");
             peerProperties.setProperty("negotiationType", "TLS");
             // 在grpc的NettyChannelBuilder上设置特定选项
@@ -128,14 +130,15 @@ public class ChaincodeManager {
         }
 
         for (int i = 0; i < orderers.get().size(); i++) {
-            File ordererCert = Paths.get(config.getCryptoConfigPath(), "/ordererOrganizations", orderers.getOrdererDomainName(), "orderers", orderers.get().get(i).getOrdererName(),
-                    "tls/server.crt").toFile();
+            File ordererCert = Paths.get(config.getCryptoConfigPath(), orderers.getOrdererDomainName(), orderers.get().get(i).getOrdererLocalDir(),
+                    "tls/ca.crt").toFile();
             if (!ordererCert.exists()) {
                 throw new RuntimeException(
                         String.format("Missing cert file for: %s. Could not find at location: %s", orderers.get().get(i).getOrdererName(), ordererCert.getAbsolutePath()));
             }
             Properties ordererProperties = new Properties();
             ordererProperties.setProperty("pemFile", ordererCert.getAbsolutePath());
+            //ordererProperties.setProperty("trustServerCertificate", "true");
             ordererProperties.setProperty("hostnameOverride", orderers.getOrdererDomainName());
             ordererProperties.setProperty("sslProvider", "openSSL");
             ordererProperties.setProperty("negotiationType", "TLS");

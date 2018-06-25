@@ -30,8 +30,8 @@ public class Orderers {
 	/**
 	 *  新增排序服务器 
 	 *  */
-	public void addOrderer(String name, String location) {
-		orderers.add(new Orderer(name, location));
+	public void addOrderer(String name, String location,String localOrdererDir) {
+		orderers.add(new Orderer(name, location,localOrdererDir));
 	}
 	
 	/** 
