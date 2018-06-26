@@ -1,8 +1,11 @@
 package cn.freeexchange.fabric.api.ca;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.URL;
 
 import org.apache.log4j.Logger;
+import org.springframework.util.ResourceUtils;
 
 import cn.freeexchange.fabric.api.chaincode.Chaincode;
 import cn.freeexchange.fabric.api.component.Orderers;
@@ -33,7 +36,9 @@ public class FabricConfig {
      * 默认fabric配置路径
      */
     private String getChannlePath() {
-        String directorys = ChaincodeManager.class.getClassLoader().getResource("fabric").getFile();
+    	String directorys = CAFileLoader.getCAMaterialRootPath();
+    	//String directorys = 
+    	System.out.println("directorys");
         log.debug("directorys = " + directorys);
         File directory = new File(directorys);
         log.debug("directory = " + directory.getPath());

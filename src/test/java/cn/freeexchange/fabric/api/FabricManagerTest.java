@@ -18,4 +18,11 @@ public class FabricManagerTest {
 		Assert.assertEquals("the value of testkey4 is : testkey0:testvalue4", "testkey0:testvalue4", querya.get("data"));
 		System.out.println(querya.toString());
 	}
+	
+	@Test
+	public  void testInvoke() throws Exception {
+		ChaincodeManager manager = FabricManager.obtain().getManager();
+		Map<String, String> invoke = manager.invoke("write", new String[] {"testkey5","testkey5:testvalue5"});
+		System.out.println(invoke);
+	}
 }

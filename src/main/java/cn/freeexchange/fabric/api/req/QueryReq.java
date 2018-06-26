@@ -1,6 +1,9 @@
 package cn.freeexchange.fabric.api.req;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson.JSON;
 
 public class QueryReq {
 	
@@ -69,6 +72,25 @@ public class QueryReq {
 
 	public void setArgs(String[] args) {
 		this.args = args;
+	}
+	
+	public static void main(String[] args) {
+		QueryReq qr = new QueryReq();
+		qr.setAffiliation("freeexchange.cn");
+		qr.setAction("query");
+		qr.setChannel("mychannel");
+		qr.setChaincode("simple");
+		List<PeerIdentity> pis = new ArrayList<>();
+		PeerIdentity pi = new PeerIdentity();
+		pi.setOrgName("org1");
+		pi.setPeerName("peer0");
+		pis.add(pi);
+		qr.setPeers(pis);
+		qr.setFuncName("query");
+		qr.setArgs(new String[] {"testkey5"});
+		String jsonString = JSON.toJSONString(qr);
+		System.out.println(jsonString);
+		
 	}
 
 }

@@ -12,6 +12,7 @@ import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.TransactionException;
 
+import cn.freeexchange.fabric.api.ca.CAFileLoader;
 import cn.freeexchange.fabric.api.ca.FabricConfig;
 import cn.freeexchange.fabric.api.chaincode.Chaincode;
 import cn.freeexchange.fabric.api.component.Orderers;
@@ -129,7 +130,7 @@ public class FabricManager {
      * @return /WEB-INF/classes/fabric/channel-artifacts/
      */
     private String getChannleArtifactsPath() {
-        String directorys = FabricManager.class.getClassLoader().getResource("fabric").getFile();
+        String directorys = CAFileLoader.getCAMaterialRootPath();
         log.debug("directorys = " + directorys);
         File directory = new File(directorys);
         log.debug("directory = " + directory.getPath());
@@ -143,7 +144,7 @@ public class FabricManager {
      * @return /WEB-INF/classes/fabric/crypto-config/
      */
     private String getCryptoConfigPath() {
-        String directorys = FabricManager.class.getClassLoader().getResource("fabric").getFile();
+        String directorys =  CAFileLoader.getCAMaterialRootPath();
         log.debug("directorys = " + directorys);
         File directory = new File(directorys);
         log.debug("directory = " + directory.getPath());

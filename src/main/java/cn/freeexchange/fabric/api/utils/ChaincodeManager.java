@@ -106,7 +106,7 @@ public class ChaincodeManager {
 //        channel.setDeployWaitTime(chaincode.getDeployWatiTime());
 
         for (int i = 0; i < peers.get().size(); i++) {
-            File peerCert = Paths.get(config.getCryptoConfigPath(), peers.getOrgDomainName(),peers.get().get(i).getPeerLocalDir(), "tls/ca.crt")
+            File peerCert = Paths.get(config.getCryptoConfigPath(), peers.getOrgDomainName(),peers.get().get(i).getPeerLocalDir(), "tls/server.crt")
                     .toFile();
             if (!peerCert.exists()) {
                 throw new RuntimeException(
@@ -131,15 +131,15 @@ public class ChaincodeManager {
 
         for (int i = 0; i < orderers.get().size(); i++) {
             File ordererCert = Paths.get(config.getCryptoConfigPath(), orderers.getOrdererDomainName(), orderers.get().get(i).getOrdererLocalDir(),
-                    "tls/ca.crt").toFile();
+                    "tls/server.crt").toFile();
             if (!ordererCert.exists()) {
                 throw new RuntimeException(
                         String.format("Missing cert file for: %s. Could not find at location: %s", orderers.get().get(i).getOrdererName(), ordererCert.getAbsolutePath()));
             }
             Properties ordererProperties = new Properties();
             ordererProperties.setProperty("pemFile", ordererCert.getAbsolutePath());
-            //ordererProperties.setProperty("trustServerCertificate", "true");
-            ordererProperties.setProperty("hostnameOverride", orderers.getOrdererDomainName());
+            ordererProperties.setProperty("trustServerCertificate", "true");
+            //ordererProperties.setProperty("hostnameOverride", orderers.getOrdererDomainName());
             ordererProperties.setProperty("sslProvider", "openSSL");
             ordererProperties.setProperty("negotiationType", "TLS");
             ordererProperties.put("grpc.ManagedChannelBuilderOption.maxInboundMessageSize", 9000000);
